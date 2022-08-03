@@ -14,6 +14,8 @@ Vagrant.configure("2") do |config|
   # boxes at https://vagrantcloud.com/search.
   config.vm.box = "ubuntu/focal64"
 
+  # config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/id_rsa.pub"
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -69,8 +71,12 @@ Vagrant.configure("2") do |config|
     # Enable provisioning with a shell script. Additional provisioners such as
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
+  config.vm.provision "shell", do |s|
+    ssh_pub_key = File.readlines("/home/username/.ssh/id_rsa.pub").first.strip
+    inline: <<-SHELL
     apt-get update
     apt-get install -y curl
+    # echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+    # echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
   SHELL
 end
