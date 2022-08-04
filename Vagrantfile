@@ -72,7 +72,5 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
     apt-get install -y curl
-    # echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
-    # echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
   SHELL
 end
